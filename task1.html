@@ -1,95 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      margin: 20px auto;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-    }
-
-    .grid button {
-      padding: 10px;
-      background-color: #f2f2f2;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .grid button:hover {
-      background-color: #e0e0e0;
-    }
-
-    #equals {
-      grid-column: span 2;
-    }
-
-    #clear {
-      background-color: #ff6347;
-      color: #fff;
-      grid-column: span 2;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Personal Portfolio Website</title>
+    <!----CSS link----->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <input type="text" id="display" readonly>
-    <div class="grid">
-      <button onclick="appendToDisplay('7')">7</button>
-      <button onclick="appendToDisplay('8')">8</button>
-      <button onclick="appendToDisplay('9')">9</button>
-      <button onclick="appendToDisplay('/')">/</button>
-      <button onclick="appendToDisplay('4')">4</button>
-      <button onclick="appendToDisplay('5')">5</button>
-      <button onclick="appendToDisplay('6')">6</button>
-      <button onclick="appendToDisplay('*')">*</button>
-      <button onclick="appendToDisplay('1')">1</button>
-      <button onclick="appendToDisplay('2')">2</button>
-      <button onclick="appendToDisplay('3')">3</button>
-      <button onclick="appendToDisplay('-')">-</button>
-      <button onclick="appendToDisplay('0')">0</button>
-      <button onclick="appendToDisplay('.')">.</button>
-      <button onclick="calculate()">=</button>
-      <button id="clear" onclick="clearDisplay()">C</button>
-      <button onclick="appendToDisplay('+')">+</button>
+    <div class="hero">
+        <nav>
+           
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <a href="#" class="btn">Buy Now</a>
+        </nav>
+        <div class="content">
+            <span class="title">Intern at oasis</span>
+            <h1>Hello, I’m <span>Preethi Boga</span></h1>
+            <p>I’m a intern at oasis infobyte,Intern at Acmegrade</p>
+            <a href="#" class="btn">Download CV</a>
+        </div>
     </div>
-  </div>
-
-  <script>
-    function appendToDisplay(value) {
-      var display = document.getElementById("display");
-      display.value += value;
-    }
-
-    function calculate() {
-      var display = document.getElementById("display");
-      var result = eval(display.value);
-      display.value = result;
-    }
-
-    function clearDisplay() {
-      var display = document.getElementById("display");
-      display.value = "";
-    }
-  </script>
 </body>
 </html>

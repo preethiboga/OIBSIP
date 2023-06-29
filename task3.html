@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>To-Do App</title>
+  <title>Temperature Converter</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -9,161 +9,86 @@
 
     .container {
       margin: 20px auto;
-      width: 400px;
+      width: 300px;
     }
 
-    h2 {
-      margin-bottom: 10px;
+    label {
+      display: block;
+      margin-bottom: 5px;
     }
 
-    input[type="text"] {
+    input[type="number"] {
       width: 100%;
       padding: 5px;
       margin-bottom: 10px;
     }
 
-    .task-list {
+    select {
+      width: 100%;
+      padding: 5px;
       margin-bottom: 10px;
     }
 
-    .task {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-
-    .task .checkbox {
-      margin-right: 5px;
-    }
-
-    .task .task-name {
-      flex-grow: 1;
-    }
-
-    .task .timestamp {
-      margin-left: 10px;
-      color: #999;
-      font-size: 12px;
-    }
-
-    .task .delete {
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
       cursor: pointer;
-      color: red;
-      margin-left: 10px;
     }
 
-    .completed-task {
-      text-decoration: line-through;
-      color: gray;
+    #result {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>To-Do App</h2>
-    <input type="text" id="new-task-input" placeholder="Enter a task">
-    <button onclick="addTask()">Add Task</button>
-
-    <h2>Pending Tasks</h2>
-    <div class="task-list" id="pending-tasks-list"></div>
-
-    <h2>Completed Tasks</h2>
-    <div class="task-list" id="completed-tasks-list"></div>
+    <h2>Temperature Converter</h2>
+    <label>Temperature:</label>
+    <input type="number" id="temperature" placeholder="Enter temperature" required>
+    <label>Unit:</label>
+    <select id="unit">
+      <option value="Celsius">Celsius</option>
+      <option value="Fahrenheit">Fahrenheit</option>
+      <option value="Kelvin">Kelvin</option>
+    </select>
+    <button onclick="convertTemperature()">Convert</button>
+    <div id="result"></div>
   </div>
 
   <script>
-    var tasks = [];
+    function convertTemperature() {
+      var temperatureInput = document.getElementById("temperature").value;
+      var unitInput = document.getElementById("unit").value;
+      var convertedTemperature = null;
+      var convertedUnit = null;
 
-    function addTask() {
-      var input = document.getElementById("new-task-input");
-      var taskName = input.value.trim();
-
-      if (taskName === "") {
-        alert("Please enter a task.");
+      if (!temperatureInput) {
+        alert("Please enter a temperature.");
         return;
       }
 
-      var task = {
-        name: taskName,
-        completed: false,
-        timestamp: new Date()
-      };
+      var temperature = parseFloat(temperatureInput);
 
-      tasks.push(task);
-      input.value = "";
+      if (isNaN(temperature)) {
+        alert("Invalid temperature. Please enter a number.");
+        return;
+      }
 
-      renderTasks();
-    }
+      if (unitInput === "Celsius") {
+        convertedTemperature = (temperature * 9/5) + 32;
+        convertedUnit = "°F";
+      } else if (unitInput === "Fahrenheit") {
+        convertedTemperature = (temperature - 32) * 5/9;
+        convertedUnit = "°C";
+      } else if (unitInput === "Kelvin") {
+        convertedTemperature = temperature - 273.15;
+        convertedUnit = "°C";
+      }
 
-    function renderTasks() {
-      var pendingTasksList = document.getElementById("pending-tasks-list");
-      var completedTasksList = document.getElementById("completed-tasks-list");
-      pendingTasksList.innerHTML = "";
-      completedTasksList.innerHTML = "";
-
-      tasks.forEach(function(task, index) {
-        var taskItem = document.createElement("div");
-        taskItem.className = "task";
-
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "checkbox";
-        checkbox.checked = task.completed;
-        checkbox.onclick = function() {
-          toggleTaskCompletion(index);
-        };
-
-        var taskName = document.createElement("span");
-        taskName.className = "task-name";
-        taskName.textContent = task.name;
-        if (task.completed) {
-          taskName.className += " completed-task";
-        }
-
-        var timestamp = document.createElement("span");
-        timestamp.className = "timestamp";
-        timestamp.textContent = formatDate(task.timestamp);
-
-        var deleteButton = document.createElement("span");
-        deleteButton.className = "delete";
-        deleteButton.textContent = "Delete";
-        deleteButton.onclick = function() {
-          deleteTask(index);
-        };
-
-        taskItem.appendChild(checkbox);
-        taskItem.appendChild(taskName);
-        taskItem.appendChild(timestamp);
-        taskItem.appendChild(deleteButton);
-
-        if (task.completed) {
-          completedTasksList.appendChild(taskItem);
-        } else {
-          pendingTasksList.appendChild(taskItem);
-        }
-      });
-    }
-
-    function toggleTaskCompletion(index) {
-      tasks[index].completed = !tasks[index].completed;
-      tasks[index].timestamp = new Date();
-      renderTasks();
-    }
-
-    function deleteTask(index) {
-      tasks.splice(index, 1);
-      renderTasks();
-    }
-
-    function formatDate(date) {
-      var options = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      };
-      return date.toLocaleString("en-US", options);
+      var resultElement = document.getElementById("result");
+      resultElement.textContent = "Converted temperature: " + convertedTemperature.toFixed(2) + " " + convertedUnit;
     }
   </script>
 </body>
